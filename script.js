@@ -34,11 +34,7 @@ var chart = new Chart(ctx, {
         tooltips: {
             mode: 'index',
             intersect: false
-         },
-         hover: {
-            mode: 'index',
-            intersect: false
-         }
+        }
     }
 });
 var i = 0;
@@ -68,7 +64,9 @@ slider.on('update', function(values) {
 
     chart.data.datasets.forEach((ds, idx) => {
         if(ds.label.startsWith('avg')) {
-            ds.data = getAveragedData(chart.data.datasets[idx-1].data, begin, end)
+            var averaged_data = getAveragedData(chart.data.datasets[idx-1].data, begin, end)
+            ds.data = averaged_data
+            ds.label = ds.label.split('(')[0] + '(' + averaged_data[0].y + ')'
         }
     });
 
@@ -119,9 +117,10 @@ function buildChart(filename, fit_data) {
         pointRadius: 0
     });
 
+    var averaged_data = getAveragedData(chartData)
     chart.data.datasets.push({
-        label: 'avg' + filename,
-        data:  getAveragedData(chartData),
+        label: 'avg_' + filename + ' (' + averaged_data[0].y + ')' ,
+        data:  averaged_data,
         backgroundColor: backgroundColors[i],
         borderColor: borderColors[i],
         borderWidth: 1,
