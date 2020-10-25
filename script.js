@@ -63,7 +63,7 @@ slider.on('update', function(values) {
     chart.options.scales.xAxes[0].ticks.max = end
 
     chart.data.datasets.forEach((ds, idx) => {
-        if(ds.label.startsWith('avg')) {
+        if(ds.label.startsWith('avg') && chart.data.datasets[idx-1].data.length > 0) {
             var averaged_data = getAveragedData(chart.data.datasets[idx-1].data, begin, end)
             ds.data = averaged_data
             ds.label = ds.label.split('(')[0] + '(' + averaged_data[0].y + ')'
