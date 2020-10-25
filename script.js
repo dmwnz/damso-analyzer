@@ -98,12 +98,10 @@ function getAveragedData(data, begin=null, end=null) {
 }
 
 
-function buildChart(filename, fit_data) {
+function buildChart(filename, fit_data, offset) {
     var chartData = fit_data.records
         .map(a => {
-            if(a.left_right_balance == undefined) {
-                a.timestamp.setHours( a.timestamp.getHours() - 2 )
-            }
+            a.timestamp.setHours( a.timestamp.getHours() + offset )
             return { t: a.timestamp, y: a.power }
         })
         .filter(a => a.y != undefined)
@@ -167,7 +165,10 @@ function readFit(file) {
             } else {
                 console.log("Data loaded")
 
-                buildChart(file.name, data)
+                var offset = prompt("Time zone offet? (hours)", "0")
+                offset = parseInt(offset)
+
+                buildChart(file.name, data, offset)
             }
     
         });
