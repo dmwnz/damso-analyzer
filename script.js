@@ -127,7 +127,7 @@ function filterDataSet() {
         }
         if(ds.label.startsWith('pow')) {
             fullDataSets[i].forEach(d => {
-                if(d.y < power_min && d.y <= power_max) {
+                if(d.y < power_min && d.y > power_max) {
                     pointsToRemove.push(Math.round(d.t.getTime()/1000))
                 }
             })
