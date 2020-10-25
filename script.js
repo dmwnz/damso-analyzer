@@ -88,7 +88,15 @@ function getAveragedData(data, begin=null, end=null) {
         }
     })
     var average = Math.round(sum * 10 / n) / 10
-    return data.map(a => { return {t: a.t, y: average}})
+
+    var res = [{
+        t: data[0].t,
+        y: average
+    },{
+        t: data[data.length - 1].t,
+        y: average
+    }]
+    return res
 }
 
 
