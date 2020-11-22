@@ -182,7 +182,7 @@ function getAveragedData(data, begin, end) {
 function buildChart(filename, fit_data, offset) {
     var chartPowerData = fit_data.records
         .map(a => {
-            a.timestamp.setHours( a.timestamp.getHours() + offset )
+            a.timestamp.setSeconds( a.timestamp.getSeconds() + offset * 3600 )
             return { t: a.timestamp, y: a.power }
         })
         .filter(a => a.y != undefined)
@@ -310,7 +310,7 @@ function readFit(file) {
                 console.log("Data loaded")
 
                 var offset = prompt("Time zone offet? (hours)", "0")
-                offset = parseInt(offset)
+                offset = parseFloat(offset)
 
                 buildChart(file.name, data, offset)
             }
